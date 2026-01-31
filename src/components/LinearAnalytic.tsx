@@ -9,18 +9,13 @@ import {
 } from "recharts";
 import type { CashflowAnalyticDTO } from "../models/analytic.model";
 import { convertNumberToCurrency } from "../utils/helper/converter";
-import { useLinearFilter } from "../stores/page.store";
-import DropdownButton from "./DropdownButton";
 import Flex from "./Flex";
-import { queryClient } from "../utils/config/client";
 
 type Props = {
   data: CashflowAnalyticDTO[];
 };
 
 const LinearAnalytic = ({ data }: Props) => {
-  const linearFilter = useLinearFilter();
-
   return (
     <Flex className="h-113.25 border border-neutral-200 rounded-lg">
       <Flex className="px-6 pt-6 pb-4 flex-row! items-start justify-between">
@@ -40,24 +35,6 @@ const LinearAnalytic = ({ data }: Props) => {
               <p className="text-sm text-neutral-600">Total Profit</p>
             </Flex>
           </Flex>
-
-          <DropdownButton
-            data={[
-              {
-                label: "Bulanan",
-                value: "monthly",
-              },
-              {
-                label: "Tahunan",
-                value: "yearly",
-              },
-            ]}
-            value={linearFilter.data}
-            onPick={(data) => {
-              linearFilter.onChange(data);
-              queryClient.invalidateQueries({ queryKey: ["getTrend"] });
-            }}
-          />
         </Flex>
       </Flex>
 

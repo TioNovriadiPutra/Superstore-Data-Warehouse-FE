@@ -1,3 +1,4 @@
+import { getMonth, getYear } from "date-fns";
 import type {
   AnalyticSummaryDTO,
   CashflowAnalyticDTO,
@@ -13,9 +14,15 @@ import type { ResType } from "../types/page.type";
 import { API_ENDPOINT } from "../utils/config/api";
 import { axiosInstance } from "../utils/config/axios";
 
-export const getKPI = async (): Promise<ResType<AnalyticSummaryDTO>> => {
+export const getKPI = async (
+  filter: DropdownType,
+): Promise<ResType<AnalyticSummaryDTO>> => {
   try {
-    const response = await axiosInstance.get(API_ENDPOINT.getKPI);
+    const now = new Date();
+
+    const response = await axiosInstance.get(
+      `${API_ENDPOINT.getKPI}?mode=${filter.value}&year=${getYear(now)}&month=${getMonth(now) + 1}`,
+    );
 
     return response.data as ResType<AnalyticSummaryDTO>;
   } catch (error) {

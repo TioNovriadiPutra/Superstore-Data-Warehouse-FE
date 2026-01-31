@@ -73,8 +73,8 @@ const useAnalyticModel = () => {
     useQueries({
       queries: [
         {
-          queryKey: ["getKPI"],
-          queryFn: () => getKPI(),
+          queryKey: ["getKPI", filter],
+          queryFn: () => getKPI(filter),
         },
         {
           queryKey: ["getTrend", filter],

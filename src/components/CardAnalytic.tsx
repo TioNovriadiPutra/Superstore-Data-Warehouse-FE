@@ -3,12 +3,15 @@ import { useEffect } from "react";
 import { convertNumberToCurrency } from "../utils/helper/converter";
 import type { DashboardSummaryType } from "../types/page.type";
 import Flex from "./Flex";
+import { useLinearFilter } from "../stores/page.store";
 
 type Props = {
   data: DashboardSummaryType;
 };
 
 const CardAnalytic = ({ data }: Props) => {
+  const filterData = useLinearFilter((state) => state.data);
+
   const Icon = data.icon;
 
   const count = useMotionValue(0);
@@ -74,7 +77,7 @@ const CardAnalytic = ({ data }: Props) => {
           >
             {formattedMean}
           </motion.span>{" "}
-          from last month
+          from last {filterData.value === "monthly" ? "month" : "year"}
         </p>
       </Flex>
     </Flex>
